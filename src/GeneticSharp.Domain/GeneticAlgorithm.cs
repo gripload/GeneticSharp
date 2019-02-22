@@ -123,6 +123,11 @@ namespace GeneticSharp.Domain
 
         #region Events
         /// <summary>
+        /// Occurs when generation is beginning to run.
+        /// </summary>
+        public event EventHandler GenerationRunning;
+
+        /// <summary>
         /// Occurs when generation ran.
         /// </summary>
         public event EventHandler GenerationRan;
@@ -360,6 +365,7 @@ namespace GeneticSharp.Domain
         /// <returns>True if termination has been reached, otherwise false.</returns>
         private bool EvolveOneGeneration()
         {
+            GenerationRunning?.Invoke(this, EventArgs.Empty);
             var parents = SelectParents();
             var offspring = Cross(parents);
             Mutate(offspring);
